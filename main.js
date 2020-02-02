@@ -35,6 +35,12 @@ function drawPaddle() {
     ctx.fill();
     ctx.closePath();
 }
+
+
+function drawGameOver() {
+    ctx.font = '30px Arial';
+    ctx.fillText("Game Over! Try Again!", 45, 175);
+}
 //draw function
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -49,11 +55,13 @@ function draw() {
     } else if (leftPressed && paddleX > 0) {
         paddleX += -7;
     }
-    //wall collision logic
+    //wall collision logic + game over
     if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
         dx = -dx;
     } else if (y + dy < ballRadius || (y + dy > canvas.height - ballRadius && x + dx > paddleX && x + dx < paddleX + paddleWidth)) {
         dy = -dy;
+    } else if (y + dy > canvas.height) {
+       drawGameOver();
     }
 }
 
@@ -74,7 +82,7 @@ function keyUpHandler(e) {
 }
 
 
-setInterval(draw, 10);
+var interval = setInterval(draw, 10);
 
 //event listeners for paddle movement
 document.addEventListener('keydown', keyDownHandler, false);
