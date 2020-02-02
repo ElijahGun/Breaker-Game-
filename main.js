@@ -36,16 +36,48 @@ function drawPaddle() {
     ctx.closePath();
 }
 
-
 function drawGameOver() {
     ctx.font = '30px Arial';
     ctx.fillText("Game Over! Try Again!", 45, 175);
 }
+
+//brick vars
+var brickHeight = 20;
+var brickWidth = 75;
+var brickX = 10;
+var brickY = 10;
+var brickOffsetTop = 30;
+var brickOffsetLeft = 30;
+var brickColumns = 5;
+var brickRows = 3;
+//brick 2d arr
+var bricks = [];
+for (let c = 0; c < brickColumns; c++) {
+    bricks[c] = [];
+    for (let r = 0; r < brickRows; r++) {
+        bricks[c][r] = {x: 0, y: 0, status: 1}
+    }
+}
+
+function drawBricks() {
+    for (let c = 0; c < brickColumns; c++) {
+        for (let r = 0; r < brickRows; r++) 
+            bricks[c][r].x = c*(brickWidth)+ brickOffsetLeft
+            ctx.beginPath();
+            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.fillStyle = 'brown';
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+    }
+   
 //draw function
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBall();
     drawPaddle();
+    drawBricks();
     //ball movement
     x += dx;
     y += dy;
