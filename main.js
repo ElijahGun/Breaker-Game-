@@ -48,6 +48,7 @@ var brickX = 10;
 var brickY = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
+var brickPadding = 10;
 var brickColumns = 5;
 var brickRows = 3;
 //brick 2d arr
@@ -61,15 +62,17 @@ for (let c = 0; c < brickColumns; c++) {
 
 function drawBricks() {
     for (let c = 0; c < brickColumns; c++) {
-        for (let r = 0; r < brickRows; r++) 
-            bricks[c][r].x = c*(brickWidth)+ brickOffsetLeft
+        for (let r = 0; r < brickRows; r++){
+        var b = bricks[c][r]; 
+            b.x= (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+            b.y = (r * (brickHeight + brickPadding)) + brickOffsetTop;
             ctx.beginPath();
-            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+            ctx.rect(b.x, b.y, brickWidth, brickHeight);
             ctx.fillStyle = 'brown';
             ctx.fill();
             ctx.closePath();
         }
-        
+        }
     }
    
 //draw function
