@@ -44,8 +44,6 @@ function drawGameOver() {
 //brick vars
 var brickHeight = 20;
 var brickWidth = 75;
-var brickX = 10;
-var brickY = 10;
 var brickOffsetTop = 30;
 var brickOffsetLeft = 30;
 var brickPadding = 10;
