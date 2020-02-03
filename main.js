@@ -19,6 +19,13 @@ function drawBall() {
     ctx.closePath();
 }
 
+function returnBall() {
+    x = (canvas.width - ballRadius) / 2;
+y = canvas.height - 30;
+dx = 2;
+dy = -2;
+}
+
 //paddle vars
 var paddleHeight = 10;
 var paddleWidth = 75;
@@ -111,6 +118,15 @@ function drawBricks() {
         //ctx.strokeStyle = 'chartreuse';
     }
 
+    var lives = 1;
+    //keeps score
+    function drawLives() {
+        
+        ctx.font = '20px serif';
+        ctx.fillText(`Lives: ${lives}`, 20, 20);    
+        //ctx.strokeStyle = 'chartreuse';
+    }
+
     function winLevel() {
         if (score == (brickColumns*brickRows)) {
             dx = 0;
@@ -126,6 +142,7 @@ function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBall();
     drawScore();
+    drawLives();
     drawPaddle();
     drawBricks();
     brickCollision();
@@ -144,9 +161,15 @@ function draw() {
         dx = -dx;
     } else if (y + dy < ballRadius || (y + dy > canvas.height - ballRadius && x + dx > paddleX && x + dx < paddleX + paddleWidth)) {
         dy = -dy;
-    } else if (y + dy > canvas.height) {
-        gameOver = true;
-        drawGameOver();
+    } else if (y + dy > canvas.height +20) {
+        if (lives == 0) {
+            gameOver = true;
+            drawGameOver();
+        } else if (lives > 0) {
+            lives --;
+            returnBall();
+        }
+        
     }
 
     //reset logic
