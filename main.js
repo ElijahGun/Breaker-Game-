@@ -53,6 +53,8 @@ var brickOffsetLeft = 30;
 var brickPadding = 10;
 var brickColumns = 5;
 var brickRows = 3;
+var brickX = 0;
+var brickY = 0;
 //brick 2d arr
 var bricks = [];
 for (let c = 0; c < brickColumns; c++) {
@@ -66,14 +68,34 @@ function drawBricks() {
     for (let c = 0; c < brickColumns; c++) {
         for (let r = 0; r < brickRows; r++){
         var b = bricks[c][r]; 
-            b.x= (c * (brickWidth + brickPadding)) + brickOffsetLeft;
-            b.y = (r * (brickHeight + brickPadding)) + brickOffsetTop;
-            ctx.beginPath();
-            ctx.rect(b.x, b.y, brickWidth, brickHeight);
-            ctx.fillStyle = 'brown';
-            ctx.fill();
-            ctx.closePath();
+            brickX= (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+            brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+            b.x = brickX;
+            b.y = brickY;
+            if (b.status == 1) {
+                ctx.beginPath();
+                ctx.rect(b.x, b.y, brickWidth, brickHeight);
+                ctx.fillStyle = 'brown';
+                ctx.fill();
+                ctx.closePath(); 
+            }
+      
         }
+        }
+    }
+
+    function brickCollision() {
+        for (let c = 0; c < brickColumns; c++) {
+            for (let r = 0; r < brickRows; r++) {
+                var brick = bricks[c][r]
+                if (brick.status == 1) {
+                    if (x + dx > brick.x && x + dx < brick.x + brickWidth && y + dy > brick.y && y + dy < brick.y + brickHeight) {
+                        brick.status = 0;
+                        dy = -dy;
+                    }                }
+                
+            }
+            
         }
     }
    
@@ -83,6 +105,7 @@ function draw() {
     drawBall();
     drawPaddle();
     drawBricks();
+    brickCollision();
     //ball movement
     x += dx;
     y += dy;
