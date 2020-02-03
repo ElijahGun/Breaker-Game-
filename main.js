@@ -36,9 +36,13 @@ function drawPaddle() {
     ctx.closePath();
 }
 
+var spacePressed = false;
+var gameOver = false;
+
 function drawGameOver() {
     ctx.font = '30px Arial';
-    ctx.fillText("Game Over! Try Again!", 45, 175);
+    ctx.fillText("Game Over! Try Again!", 70, 175);
+    ctx.fillText('Press spacebar to reset', 70, 250, 480);
 }
 
 //brick vars
@@ -94,7 +98,14 @@ function draw() {
     } else if (y + dy < ballRadius || (y + dy > canvas.height - ballRadius && x + dx > paddleX && x + dx < paddleX + paddleWidth)) {
         dy = -dy;
     } else if (y + dy > canvas.height) {
-       drawGameOver();
+        gameOver = true;
+        drawGameOver();
+    }
+
+    //reset logic
+    if (gameOver && spacePressed) {
+        clearInterval(interval);
+        document.location.reload();
     }
 }
 
@@ -103,6 +114,8 @@ function keyDownHandler(e) {
         rightPressed = true;
     } else if (e.key == 'Left' || e.key == 'ArrowLeft') {
         leftPressed = true;
+    } else if (e.key == ' ') {
+        spacePressed = true;
     }
 }
 
@@ -111,7 +124,7 @@ function keyUpHandler(e) {
         rightPressed = false;
     } else if (e.key == 'Left' || e.key == 'ArrowLeft') {
         leftPressed = false;
-    }
+    } 
 }
 
 
