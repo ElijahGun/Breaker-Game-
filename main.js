@@ -1,6 +1,7 @@
 //canvas vars
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
+var body = document.getElementById('body');
 
 
 //ball vars
@@ -47,10 +48,12 @@ var spacePressed = false;
 var gameOver = false;
 
 function drawGameOver() {
+    canvas.style.backgroundImage = 'url(./you_lose.png)';
+    canvas.style.backgroundSize = 'contain';
     ctx.beginPath();
     ctx.font = '30px Arial';
-    ctx.fillText("Game Over! Try Again!", 70, 175);
-    ctx.fillText('Press spacebar to reset', 70, 250, 480);
+    ctx.fillText("HAHAHA LOL! Try Again!", 70, 375);
+    ctx.fillText('Press spacebar to reset', 70, 450, 480);
     ctx.closePath();
 }
 
@@ -118,7 +121,7 @@ function drawBricks() {
         //ctx.strokeStyle = 'chartreuse';
     }
 
-    var lives = 1;
+    var lives = 0;
     //keeps score
     function drawLives() {
         
@@ -131,9 +134,8 @@ function drawBricks() {
         if (score == (brickColumns*brickRows)) {
             dx = 0;
             dy = 0;
-            ctx.font = '60px serif'
-            ctx.fillStyle = 'chartreuse';
-            ctx.fillText('You Win!!!', 30, 200);
+            canvas.style.backgroundImage = 'url(./win.png)';
+            canvas.style.backgroundSize = 'contain'
         }
     }
    
