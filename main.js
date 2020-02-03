@@ -14,7 +14,7 @@ var dy = -2;
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, Math.PI*2, false);
-    ctx.fillStyle = 'blue';
+    ctx.fillStyle = 'chartreuse';
     ctx.fill();
     ctx.closePath();
 }
@@ -40,9 +40,11 @@ var spacePressed = false;
 var gameOver = false;
 
 function drawGameOver() {
+    ctx.beginPath();
     ctx.font = '30px Arial';
     ctx.fillText("Game Over! Try Again!", 70, 175);
     ctx.fillText('Press spacebar to reset', 70, 250, 480);
+    ctx.closePath();
 }
 
 //brick vars
@@ -92,10 +94,30 @@ function drawBricks() {
                     if (x + dx > brick.x && x + dx < brick.x + brickWidth && y + dy > brick.y && y + dy < brick.y + brickHeight) {
                         brick.status = 0;
                         dy = -dy;
+                        score ++;
                     }                }
                 
             }
             
+        }
+    }
+
+    var score = 0;
+    //keeps score
+    function drawScore() {
+        
+        ctx.font = '20px serif';
+        ctx.fillText(`Score: ${score}`, 400, 20);    
+        //ctx.strokeStyle = 'chartreuse';
+    }
+
+    function winLevel() {
+        if (score == (brickColumns*brickRows)) {
+            dx = 0;
+            dy = 0;
+            ctx.font = '60px serif'
+            ctx.fillStyle = 'chartreuse';
+            ctx.fillText('You Win!!!', 30, 200);
         }
     }
    
@@ -103,9 +125,11 @@ function drawBricks() {
 function draw() {
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawBall();
+    drawScore();
     drawPaddle();
     drawBricks();
     brickCollision();
+    winLevel();
     //ball movement
     x += dx;
     y += dy;
